@@ -1,0 +1,29 @@
+import numpy as np
+from sympy import Matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+A = np.random.randint(0, 10, size=(3, 3))
+B = np.random.randint(0, 10, size=(3, 3))
+
+print("Matrix A:\n", A)
+print("Matrix B:\n", B)
+
+# Matrix operations
+matrix_sum = A + B  # Matrix addition
+matrix_diff = A - B  # Matrix subtraction
+matrix_prod = np.dot(A, B)  # Matrix multiplication (dot product)
+
+#Determinant of a matrix
+det_A = np.linalg.det(A)  # Returns the determinant of the matrix
+
+
+#  Inverse of a matrix
+if np.linalg.det(A) != 0:  # Check if matrix is invertible
+    inv_A = np.linalg.inv(A)  # Compute the inverse of A
+else:
+    inv_A = "Matrix is singular, cannot compute inverse"  # No inverse if determinant is 0
+
+
+#  Rank of a matrix
+rank_A = np.linalg.matrix_rank(A)  # Returns the rank of the matrix    
