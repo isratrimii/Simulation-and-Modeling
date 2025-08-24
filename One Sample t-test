@@ -1,0 +1,40 @@
+import numpy as np
+import scipy.stats as stats #new library
+import matplotlib.pyplot as plt
+
+exam_scores = 60 + np.random.randint(0, 15, size=12) + (12 % 5) #Last two digit of id=12
+
+print(exam_scores)
+
+population_mean = 65  # Null Hypothesis (H₀):65 
+
+# Perform the one-sample t-test
+t_statistic, p_value = stats.ttest_1samp(exam_scores, population_mean)
+ci = stats.t.interval(0.95, df=len(exam_scores)-1, loc=np.mean(exam_scores), scale=stats.sem(exam_scores))
+
+# Display the results
+print(f'Sample Mean: {np.mean(exam_scores):.2f}')
+print(f'Hypothesized Population Mean: {population_mean:.2f}')
+print(f't-Statistic: {t_statistic:.2f}')
+print(f'Degrees of Freedom: {len(exam_scores) - 1}')
+print(f'p-Value: {p_value:.4f}')
+print(f'Confidence Interval: [{ci[0]:.2f}, {ci[1]:.2f}]')
+
+#Conclusion
+alpha = 0.05  # Significance level
+if p_value < alpha:
+    print(f'Reject the null hypothesis. The average class score is significantly different from {population_mean:.2f}.')
+else:
+    print(f'Fail to reject the null hypothesis. The average class score is not significantly different from {population_mean:.2f}.')
+
+plt.figure()
+plt.bar(1, np.mean(exam_scores), color="green", label='Sample Mean')
+plt.errorbar(1, np.mean(exam_scores), yerr=np.std(exam_scores), fmt='k', linewidth=1.5)
+plt.axhline(y=population_mean, color='r', linestyle='--', linewidth=1.5, label='Hypothesized Mean')
+plt.title('Sample Mean vs Hypothesized Mean')
+plt.xlim(0.5,1.5)
+plt.xlabel('Sample')
+plt.ylabel('Mean Value')
+plt.legend()
+plt.grid(True)
+plt.show()
